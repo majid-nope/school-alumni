@@ -3,4 +3,24 @@
 
     background-color: rgb(255, 255, 255);
     grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+    .brand {
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 500;
+        font-family: 'Lexend';
+
+
+        img {
+            width: 50px;
+            aspect-ratio: 1/1;
+            object-fit: contain;
+        }
+    }
 }
