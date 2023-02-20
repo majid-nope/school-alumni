@@ -3,17 +3,13 @@ import style from './SignUp.module.scss'
 import { Button } from '@mantine/core'
 // import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { TextField } from '@mui/material'
-import { DatePicker } from '@mantine/dates';
+
 import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
 const SignUp = () => {
-    const [showPassword, onShowPassword] = useState(true);
-    const handleClickShowPassword = () => onShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+ 
     const [date, setDate] = useState(dayjs('2014-08-18T21:11:54'))
     const [field, setField] = useState({})
 
