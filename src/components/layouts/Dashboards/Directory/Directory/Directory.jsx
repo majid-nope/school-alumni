@@ -1,5 +1,5 @@
 import { Button, Card, Grid, Image, Input, Tooltip } from "@mantine/core";
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Directory.module.scss";
 import { useMediaQuery } from "@mui/material";
 
@@ -13,10 +13,22 @@ import SearchIcon from "@mui/icons-material/SearchOutlined";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
 
 import PhoneIcon from '@mui/icons-material/LocalPhoneOutlined';
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUser } from "../../../../../redux/async-operations/user";
 
 const Directory = () => {
   const onMedia = useMediaQuery('(min-width: 831px)');
 
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllUser())
+  }, [])
+
+
+  const users = useSelector((state) => state.userReducer.users)
+  useEffect(() => {
+    console.log(users, "kkkkk");
+  }, [users])
   return (
     <div className={style.directory}>
       <div className={style.header} style={{ backgroundImage: `url(${bannerImg})`, flexDirection: !onMedia ? "column" : "row ", }}>
@@ -46,21 +58,21 @@ const Directory = () => {
       </div>
       <div className={style.body}>
         <Grid>
-          {Array(5).fill().map(el => (
+          {users?.map?.(el => (
             <Grid.Col md={6} lg={3} >
               <Card shadow="sm" p="lg" radius="md" sx={{}}>
                 <Card.Section>
 
                   <div className={style.header}>
                     <Image
-                      src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+                      src={`${process.env.REACT_APP_BASE_URL}/images/${el.image}`}
                       sx={{ width: "100%", padding: "20px", paddingBottom: "0" }}
                       alt="Norway"
                     />
 
                     <div className={style.info}>
-                      <h3>Muhammed Majid</h3>
-                      <span>muhammed0000majid@gmai.com</span>
+                      <h3>{el.name}</h3>
+                      <span>{el.email}</span>
                     </div>
 
                   </div>
@@ -71,15 +83,15 @@ const Directory = () => {
 
                   <div className={style.body}>
                     <div className={style.batch}>
-                      <span>Year: 2002</span>
-                      <span>Class: 4 A</span>
+                      <span>Year: {el.passOut}</span>
+                      <span>Class: {el.class} {el.division}</span>
                     </div>
                     <div className={style.moreInfo}>
-                      <span data-content={"8129634***"}><PhoneIcon /></span>
+                      <span data-content={el.phone}><PhoneIcon /></span>
                       {/* <span data-content={"muhammedmajisd@gmail.com"}><PhoneIcon /></span> */}
-                      <span data-content={"Developer"}><WorkIcon /></span>
+                      <span data-content={el.job}><WorkIcon /></span>
 
-                      <div><HomeIcon /> <span >Kerala,India, somwhew</span></div>
+                      <div><HomeIcon /> <span style={{ whiteSpace: "nowrap" }}>{el.address}</span></div>
                     </div>
                   </div>
 

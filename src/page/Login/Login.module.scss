@@ -1,0 +1,68 @@
+.container {
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../../assets/images/bg.jpg');
+    // background: url('../../assets/images/bgS.jpg');
+
+    background-clip: content-box;
+    background-position: center;
+    background-size: cover;
+
+    form {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+        width: 400px;
+        // height: 60%;
+        gap: 10px;
+        // background: linear-gradient(45deg, #56612cbd, #00eeff29);
+        background: linear-gradient(45deg, rgba(0, 234, 255, 0.233), rgba(6, 0, 0, 0.205));
+        box-shadow: 5px 8px 12px 0 #0000003b;
+        backdrop-filter: blur(4px);
+        border-radius: 15px;
+        padding: 12px;
+        margin: 15px;
+
+        padding-top: 20px;
+
+
+        label {
+            color: white;
+        }
+
+        div {
+            div {
+                &:hover {
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+
+        fieldSet {
+            border: .2px solid rgba(255, 255, 255, 0.322);
+
+            &:hover {
+                border: none;
+                outline: none;
+            }
+        }
+
+
+
+        input {
+            color: rgb(0, 0, 0);
+            color: white;
+
+            border-color: white;
+        }
+    }
+}

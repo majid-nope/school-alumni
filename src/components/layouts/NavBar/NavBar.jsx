@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./NavBar.module.scss";
-import img from '../../../assets/images/H.logo.png'
+import img from '../../../assets/images/logo.png'
 const NavBar = () => {
   return (
     <div className={style.navbar}>

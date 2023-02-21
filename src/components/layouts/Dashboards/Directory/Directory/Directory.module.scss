@@ -7,6 +7,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
+
     .header {
         background-position: 0px 391px;
         width: 100%;
@@ -15,7 +16,8 @@
         justify-content: space-around;
         color: #e0eafe;
 
-        
+
+
         .info {
             // width: 30%;
             word-wrap: break-word;
@@ -41,7 +43,9 @@
     }
 
     .body {
+
         padding: 5px 40px 5px 40px;
+        padding-top: 30px;
 
         height: 100%;
 
@@ -123,6 +127,33 @@
                 flex-direction: column;
                 gap: 5px;
                 font-size: 15px;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                padding-top: 6px;
+
+                &::-webkit-scrollbar {
+                    width: 0;
+                    height: 3px;
+
+
+                }
+
+                &::-webkit-scrollbar-track {
+                    width: 3px;
+                    background-color: rgba(184, 3, 3, 0.822);
+
+
+                }
+
+                &::-webkit-scrollbar-thumb {
+
+                    width: 3px;
+                    background-color: rgba(0, 255, 136, 0.952);
+
+                    &:hover {
+                        background-color: rgb(25, 0, 255);
+                    }
+                }
 
                 div {
                     color: rgb(66 114 154);
@@ -140,8 +171,9 @@
 
                     &::after {
                         content: attr(data-content);
-                        text-align: right;
-                        word-wrap: break-word;
+
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
 
 
                     }

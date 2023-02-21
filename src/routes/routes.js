@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Directory from "../components/layouts/Dashboards/Directory/Directory/Directory";
 import Home from "../page/Home/Home";
+import SignUp from "../page/Register/Register";
 
 //mui icons
 import Hubicon from "@mui/icons-material/Hub";
@@ -8,7 +9,7 @@ import StadiumIcon from "@mui/icons-material/Stadium";
 import GroupIcon from "@mui/icons-material/Group";
 import WorkIcon from "@mui/icons-material/Work";
 import PowerIcon from "@mui/icons-material/PowerSettingsNew";
-import SignUp from "../page/SignUp/SignUp";
+import Login from "../page/Login/Login";
 
 export const routes = createBrowserRouter(
   [
@@ -23,6 +24,10 @@ export const routes = createBrowserRouter(
     {
       path: "/register",
       element: <SignUp />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
     },
   ],
   { basename: "/" }
