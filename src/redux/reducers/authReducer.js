@@ -14,6 +14,7 @@ const authReducer = createSlice({
       console.log(action.payload);
     });
     builder.addCase(login.fulfilled, (state, action) => {
+      
       state.user = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
       console.log(action.payload);
