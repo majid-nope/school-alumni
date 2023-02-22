@@ -20,7 +20,7 @@ const Login = () => {
             <form action="">
                 <TextField id="outlined-basic" label="Phone" name='phone' variant="outlined" onChange={onChange} />
                 <Button color="green" onClick={onLogin}>Login</Button>
-                <Link style={{color:"blue"}} to={'/register'}>I already have a account</Link>
+                Don't have an account ? <Link style={{color:"#50a6ff"}} to={'/register'}>Register</Link>
 
             </form>
         </div>

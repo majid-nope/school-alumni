@@ -24,11 +24,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/async-operations/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 
 const SignUp = () => {
-  const [date, setDate] = useState(dayjs("2014-08-18T21:11:54"));
+
+
+  const onMedia = useMediaQuery('(min-width: 831px)');
+
+
+  const [date, setDate] = useState();
   const [field, setField] = useState({ class: 7 });
   const [dpPath, setDp] = useState(false);
+  const years = [];
+  for (let i = 1927; i <= new Date().getFullYear(); i++) {
+    years.push(i)
+  }
   const nav = useNavigate();
 
   const dispatch = useDispatch();
@@ -74,58 +84,19 @@ const SignUp = () => {
 
   return (
     <div className={style.container}>
-      <form action="" method="post">
-        <h1>GMUP SCHOOL</h1>
+      <form action="" method="post" style={{ scale: onMedia ? "1" : "0.7" }}>
+        <h1>GUPS CHIRAYIL</h1>
         <TextField
+          required
           name="name"
           id="outlined-basic"
           label="Your name"
           variant="outlined"
           onChange={onChange}
         />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0 50px 0 50px",
-              gap: "12px",
-            }}
-          >
-            <MobileDatePicker
-              label="Pass Out Year"
-              inputFormat="YYYY"
-              value={date}
-              onChange={onDate}
-              onAccept={(e) => onChange(null, { name: "passOut", value: e.$y })}
-              renderInput={(params) => <TextField {...params} />}
-            />
-            <MobileDatePicker
-              label="Date of Birth"
-              inputFormat="MM/DD/YYYY"
-              value={date}
-              onChange={onDate}
-              onAccept={(e) => onChange(null, { name: "DoB", value: e.$d })}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </div>
-        </LocalizationProvider>
+
         <TextField
-          id="outlined-basic"
-          label="Address"
-          name="address"
-          variant="outlined"
-          onChange={onChange}
-        />
-         <TextField
-          id="outlined-basic"
-          label="Email"
-          name="email"
-          variant="outlined"
-          onChange={onChange}
-        />
-        <TextField
+
           id="outlined-basic"
           label="Parent name"
           name="parentName"
@@ -133,19 +104,15 @@ const SignUp = () => {
           onChange={onChange}
         />
         <TextField
-          id="outlined-basic"
-          label="Job"
-          name="job"
-          variant="outlined"
-          onChange={onChange}
-        />
-        <TextField
+         required
           id="outlined-basic"
           label="Phone"
           name="phone"
           variant="outlined"
           onChange={onChange}
         />
+
+
         <div
           style={{
             display: "flex",
@@ -156,8 +123,26 @@ const SignUp = () => {
           }}
         >
           <FormControl sx={{ width: "100px" }}>
+            <InputLabel id="demo-simple-select-label">Pass Out</InputLabel>
+            <Select
+             required
+              name="class"
+              sx={{ color: "white" }}
+              label="passOut"
+              onChange={(e) =>
+                setField({ ...field, [e.target.name]: e.target.value })
+              }
+            >
+              {years.reverse().map((el) => (
+                <MenuItem value={el}>{el}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: "100px", }}>
             <InputLabel id="demo-simple-select-label">Class</InputLabel>
             <Select
+             required
+              sx={{ color: "white" }}
               name="class"
               labelId="demo-simple-select-label"
               value={field.class ? field.class : 7}
@@ -179,6 +164,7 @@ const SignUp = () => {
             <Select
               labelId="demo-simple-select-label"
               name="division"
+              sx={{ color: "white" }}
               value={field?.division}
               label="Division"
               onChange={(e) =>
@@ -189,9 +175,58 @@ const SignUp = () => {
               <MenuItem value={"B"}>B</MenuItem>
               <MenuItem value={"C"}>C</MenuItem>
               <MenuItem value={"D"}>D</MenuItem>
+              <MenuItem value={"E"}>E</MenuItem>
+              <MenuItem value={"F"}>F</MenuItem>
+              <MenuItem value={"G"}>G</MenuItem>
+              <MenuItem value={"H"}>H</MenuItem>
+              <MenuItem value={"I"}>I</MenuItem>
             </Select>
           </FormControl>
         </div>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "0 50px 0 50px",
+              gap: "12px",
+            }}
+          >
+
+            <MobileDatePicker
+              label="Date of Birth"
+              inputFormat="MM/DD/YYYY"
+              value={date}
+              onChange={onDate}
+              onAccept={(e) => onChange(null, { name: "DoB", value: e.$d })}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </div>
+        </LocalizationProvider>
+
+        <TextField
+          id="outlined-basic"
+          label="Email"
+          name="email"
+          variant="outlined"
+          onChange={onChange}
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="Job"
+          name="job"
+          variant="outlined"
+          onChange={onChange}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Address"
+          name="address"
+          variant="outlined"
+          onChange={onChange}
+        />
         <FormControl>
           <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
           <RadioGroup
@@ -235,8 +270,9 @@ const SignUp = () => {
             </IconButton>
           )}
         </FormControl>
-        <Button onClick={onRegister}>Join</Button>{" "}
-        <Link to={"/login"}>I already have a account</Link>
+        <Button onClick={onRegister}>Join</Button>
+
+        Have an account? <Link style={{ color: "rgb(0 177 255)" }} to={"/login"}>Log In</Link>
       </form>
     </div>
   );

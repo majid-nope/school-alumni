@@ -67,7 +67,7 @@ const Directory = () => {
                     <Image
                       src={`${process.env.REACT_APP_BASE_URL}/images/${el.image}`}
                       sx={{ width: "100%", padding: "20px", paddingBottom: "0" }}
-                      alt="Norway"
+                      alt="DP"
                     />
 
                     <div className={style.info}>
