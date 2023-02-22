@@ -10,28 +10,48 @@ import GroupIcon from "@mui/icons-material/Group";
 import WorkIcon from "@mui/icons-material/Work";
 import PowerIcon from "@mui/icons-material/PowerSettingsNew";
 import Login from "../page/Login/Login";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-export const routes = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Home />,
-      children: [
-        { path: "", element: <Navigate to={"/directory"} /> },
-        { path: "directory", element: <Directory /> },
-      ],
-    },
-    {
-      path: "/register",
-      element: <SignUp />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-  ],
-  { basename: "/" }
-);
+export const Router = () => {
+  const user = useSelector((state) => state);
+  const [log, setLog] = useState();
+  console.log(user, "ff");
+
+  useEffect(() => {
+    if (user.authReducer.user) {
+      setLog(true);
+    }else{
+      setLog(false)
+    }
+  }, [user.authReducer.user]);
+  const routes = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: log ? <Home /> : <Navigate to={"/login"} />,
+        children: [
+          { path: "", element: <Navigate to={"/directory"} /> },
+          { path: "directory", element: <Directory /> },
+        ],
+      },
+      {
+        path: "/register",
+        element: <SignUp />,
+      },
+      {
+        path: "/login",
+        element: log ? (
+          <Navigate to={"/directory"} />
+        ) : (
+          <Login />
+        ),
+      },
+    ],
+    { basename: "/" }
+  );
+  return routes;
+};
 
 export const sidebarRouter = () => {
   return [

@@ -12,13 +12,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/async-operations/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
     const [date, setDate] = useState(dayjs('2014-08-18T21:11:54'))
     const [field, setField] = useState({ class: 7 })
     const [dpPath, setDp] = useState(false)
+    const nav = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -53,6 +54,9 @@ const SignUp = () => {
 
 
             dispatch(register(form))
+            nav('/login')
+
+            
 
 
 
