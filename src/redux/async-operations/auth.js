@@ -4,7 +4,9 @@ import { auth } from "../apis/authApis";
 export const register = createAsyncThunk("auth/register", async (data) => {
   try {
     const response = await auth.register(data);
+    
     return response.data;
+
   } catch (err) {
     console.log(err);
   }

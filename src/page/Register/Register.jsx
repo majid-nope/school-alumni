@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import style from "./SignUp.module.scss";
 import { Button } from "@mantine/core";
 // import { Visibility, VisibilityOff } from '@mui/icons-material'
@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { register } from "../../redux/async-operations/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
+import { registerFields, validate } from "../../utils/validations";
 
 const SignUp = () => {
 
@@ -33,8 +34,9 @@ const SignUp = () => {
 
 
   const [date, setDate] = useState();
-  const [field, setField] = useState({ class: 7 });
+  const [field, setField] = useState({class:7});
   const [dpPath, setDp] = useState(false);
+  const formRef = useRef()
   const years = [];
   for (let i = 1927; i <= new Date().getFullYear(); i++) {
     years.push(i)
@@ -42,6 +44,10 @@ const SignUp = () => {
   const nav = useNavigate();
 
   const dispatch = useDispatch();
+
+
+
+
 
   const onChange = (e, dates) => {
     if (e) {
@@ -59,18 +65,34 @@ const SignUp = () => {
   };
 
   const onRegister = (e) => {
-    if (field.file) {
-      console.log(field.file);
-      delete field.undefined;
-      const form = new FormData();
 
-      for (let item in field) {
-        form.append(item, field[item]);
+    validate(field).then((error) => {
+      console.log(error);
+      if (!error.length) {
+        if (field.file) {
+          console.log(field.file);
+          delete field.undefined;
+          const form = new FormData();
+
+          for (let item in field) {
+            form.append(item, field[item]);
+          }
+
+          dispatch(register(form));
+          nav("/login");
+        }
+      } else {
+
+        alert(JSON.stringify(error))
       }
 
-      dispatch(register(form));
-      nav("/login");
-    }
+
+
+
+    })
+
+
+
   };
 
   const setPic = (e) => {
@@ -84,9 +106,10 @@ const SignUp = () => {
 
   return (
     <div className={style.container}>
-      <form action="" method="post" style={{ scale: onMedia ? "1" : "0.7" }}>
+      <form action="" method="post" style={{ scale: onMedia ? "1" : "0.7" }} ref={formRef}>
         <h1>GUPS CHIRAYIL</h1>
         <TextField
+
           required
           name="name"
           id="outlined-basic"
@@ -104,7 +127,7 @@ const SignUp = () => {
           onChange={onChange}
         />
         <TextField
-         required
+          required
           id="outlined-basic"
           label="Phone"
           name="phone"
@@ -125,8 +148,8 @@ const SignUp = () => {
           <FormControl sx={{ width: "100px" }}>
             <InputLabel id="demo-simple-select-label">Pass Out</InputLabel>
             <Select
-             required
-              name="class"
+              required
+              name="passOut"
               sx={{ color: "white" }}
               label="passOut"
               onChange={(e) =>
@@ -141,7 +164,7 @@ const SignUp = () => {
           <FormControl sx={{ width: "100px", }}>
             <InputLabel id="demo-simple-select-label">Class</InputLabel>
             <Select
-             required
+              required
               sx={{ color: "white" }}
               name="class"
               labelId="demo-simple-select-label"

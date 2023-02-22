@@ -12,6 +12,7 @@ const authReducer = createSlice({
   extraReducers: (builder) => {
     builder.addCase(register.fulfilled, (state, action) => {
       console.log(action.payload);
+      window.location.href = "/login"
     });
     builder.addCase(login.fulfilled, (state, action) => {
       
