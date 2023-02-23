@@ -15,7 +15,7 @@ const NavBar = () => {
         <span>GMUP School Chirayil
         </span>
       </div>
-      {onMedia && <Button  onClick={() => dispatch(logout())}>Logout</Button>}
+      {!onMedia && <Button  onClick={() => dispatch(logout())}>Logout</Button>}
 
     </div>
   );
