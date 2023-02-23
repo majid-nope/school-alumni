@@ -58,22 +58,14 @@
             }
         }
 
-        fieldSet {
-            border: .2px solid rgba(255, 255, 255, 0.322);
-
-            &:hover {
-                border: none;
-                outline: none;
-            }
-        }
-
+       
 
 
         input {
             color: rgb(0, 0, 0);
-            color: white;
+            // color: white;
 
-            border-color: white;
+            // border-color: white;
         }
 
 

@@ -11,6 +11,7 @@ import WorkIcon from '@mui/icons-material/WorkOutlineOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
+import EmailIcon from '@mui/icons-material/AlternateEmail';
 
 import PhoneIcon from '@mui/icons-material/LocalPhoneOutlined';
 import { useDispatch, useSelector } from "react-redux";
@@ -72,8 +73,17 @@ const Directory = () => {
 
                     <div className={style.info}>
                       <h3>{el.name}</h3>
-                      <span>{el.email}</span>
+
+
+                      <div className={style.batch}>
+
+                        <span >Year: {el.passOut}</span>
+                        <span >Class: {el.class} {el.division}</span>
+                      </div>
                     </div>
+
+
+
 
                   </div>
 
@@ -82,16 +92,13 @@ const Directory = () => {
                 <Card.Section>
 
                   <div className={style.body}>
-                    <div className={style.batch}>
-                      <span>Year: {el.passOut}</span>
-                      <span>Class: {el.class} {el.division}</span>
-                    </div>
-                    <div className={style.moreInfo}>
-                      <span data-content={el.phone}><PhoneIcon /></span>
-                      {/* <span data-content={"muhammedmajisd@gmail.com"}><PhoneIcon /></span> */}
-                      <span data-content={el.job}><WorkIcon /></span>
 
-                      <div><HomeIcon /> <span style={{ whiteSpace: "nowrap" }}>{el.address}</span></div>
+                    <div className={style.moreInfo}>
+                      <span data-content={el.phone?.replace(/.{0,2}$/, '') + "***"}><PhoneIcon /></span>
+                      <span data-content={el.email ? el.email : "none"}><EmailIcon /></span>
+                      <span data-content={el.job ? el.job : "no job"}><WorkIcon /></span>
+
+                      <div><HomeIcon /> <span style={{ whiteSpace: "nowrap" }}>{el.address ? el.address.length >= 30 ? el.address.substr(0, 29)+"..." : el.address : "no address"}</span></div>
                     </div>
                   </div>
 
@@ -112,17 +119,18 @@ const Directory = () => {
 
 
 
-                <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+                < Button variant="light" color="blue" fullWidth mt="md" radius="md" >
                   View Profile
                 </Button>
               </Card>
             </Grid.Col>
-          ))}
+          ))
+          }
 
-        </Grid>
+        </Grid >
 
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

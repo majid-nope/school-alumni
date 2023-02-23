@@ -1,49 +1,48 @@
 import React, { useRef, useState } from "react";
 import style from "./SignUp.module.scss";
-import { Button } from "@mantine/core";
+import { Button, Select, TextInput } from "@mantine/core";
 // import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   FormControl,
   FormControlLabel,
   FormLabel,
   IconButton,
-  InputLabel,
-  MenuItem,
+
+
   Radio,
   RadioGroup,
-  Select,
-  TextField,
+
+
 } from "@mui/material";
 
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+
 import { PhotoCamera } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { useDispatch } from "react-redux";
-import { register } from "../../redux/async-operations/auth";
-import { Link, useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
-import { registerFields, validate } from "../../utils/validations";
+import {  validate } from "../../utils/validations";
+import { DatePicker } from "@mantine/dates";
+import { register } from "../../redux/async-operations/auth";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
 
 
   const onMedia = useMediaQuery('(min-width: 831px)');
+  const dispatch = useDispatch()
 
 
-  const [date, setDate] = useState();
-  const [field, setField] = useState({class:7});
+  const [field, setField] = useState({ class: 7 });
   const [dpPath, setDp] = useState(false);
+  const [errorField, setError] = useState([])
   const formRef = useRef()
   const years = [];
   for (let i = 1927; i <= new Date().getFullYear(); i++) {
-    years.push(i)
+    years.push(String(i))
   }
-  const nav = useNavigate();
 
-  const dispatch = useDispatch();
 
 
 
@@ -59,31 +58,33 @@ const SignUp = () => {
       setField({ ...field, [dates.name]: dates.value });
       console.log(dates);
     }
-  };
-  const onDate = (dateValue) => {
-    setDate(dateValue);
+
+
+
+
+
   };
 
   const onRegister = (e) => {
 
     validate(field).then((error) => {
+
       console.log(error);
       if (!error.length) {
-        if (field.file) {
-          console.log(field.file);
-          delete field.undefined;
-          const form = new FormData();
 
-          for (let item in field) {
-            form.append(item, field[item]);
-          }
 
-          dispatch(register(form));
-          nav("/login");
+        delete field.undefined;
+        const form = new FormData();
+
+        for (let item in field) {
+          form.append(item, field[item]);
         }
-      } else {
 
-        alert(JSON.stringify(error))
+        dispatch(register(form));
+
+      } else {
+        setError(error)
+
       }
 
 
@@ -107,33 +108,39 @@ const SignUp = () => {
   return (
     <div className={style.container}>
       <form action="" method="post" style={{ scale: onMedia ? "1" : "0.7" }} ref={formRef}>
-        <h1>GUPS CHIRAYIL</h1>
-        <TextField
+        <h1>GMUPS CHIRAYIL</h1>
 
+
+        <TextInput
+          error={errorField.includes('name') ? "please enter your name" : false}
           required
           name="name"
-          id="outlined-basic"
-          label="Your name"
-          variant="outlined"
+          placeholder="Your name"
+          label="Full Name"
+          withAsterisk
           onChange={onChange}
         />
 
-        <TextField
 
-          id="outlined-basic"
-          label="Parent name"
-          name="parentName"
-          variant="outlined"
-          onChange={onChange}
-        />
-        <TextField
+        <TextInput
+          error={errorField.includes('phone') ? "Enter proper phone no" : false}
+
           required
-          id="outlined-basic"
-          label="Phone"
           name="phone"
-          variant="outlined"
+          placeholder="Phone"
+          label="Phone no"
+          withAsterisk
           onChange={onChange}
         />
+        <TextInput
+
+          name="parentName"
+          placeholder="Name"
+          label="Parent Name"
+
+          onChange={onChange}
+        />
+
 
 
         <div
@@ -145,111 +152,75 @@ const SignUp = () => {
             gap: "12px",
           }}
         >
-          <FormControl sx={{ width: "100px" }}>
-            <InputLabel id="demo-simple-select-label">Pass Out</InputLabel>
-            <Select
-              required
-              name="passOut"
-              sx={{ color: "white" }}
-              label="passOut"
-              onChange={(e) =>
-                setField({ ...field, [e.target.name]: e.target.value })
-              }
-            >
-              {years.reverse().map((el) => (
-                <MenuItem value={el}>{el}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ width: "100px", }}>
-            <InputLabel id="demo-simple-select-label">Class</InputLabel>
-            <Select
-              required
-              sx={{ color: "white" }}
-              name="class"
-              labelId="demo-simple-select-label"
-              value={field.class ? field.class : 7}
-              label="Class"
-              onChange={(e) =>
-                setField({ ...field, [e.target.name]: e.target.value })
-              }
-            >
-              {Array(7)
-                .fill()
-                .map((el, index) => (
-                  <MenuItem value={index + 1}>{index + 1}</MenuItem>
-                ))}
-            </Select>
-          </FormControl>
 
-          <FormControl sx={{ width: "100px" }}>
-            <InputLabel id="demo-simple-select-label">Division</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              name="division"
-              sx={{ color: "white" }}
-              value={field?.division}
-              label="Division"
-              onChange={(e) =>
-                setField({ ...field, [e.target.name]: e.target.value })
-              }
-            >
-              <MenuItem value={"A"}>A</MenuItem>
-              <MenuItem value={"B"}>B</MenuItem>
-              <MenuItem value={"C"}>C</MenuItem>
-              <MenuItem value={"D"}>D</MenuItem>
-              <MenuItem value={"E"}>E</MenuItem>
-              <MenuItem value={"F"}>F</MenuItem>
-              <MenuItem value={"G"}>G</MenuItem>
-              <MenuItem value={"H"}>H</MenuItem>
-              <MenuItem value={"I"}>I</MenuItem>
-            </Select>
-          </FormControl>
+
+          <Select
+            error={errorField.includes('passOut') ? "please select" : false}
+            label="Pass Out"
+            placeholder="year"
+            onChange={(e => setField({ ...field, passOut: e }))}
+            data={years.reverse().map((el) => ({ value: el, label: el }))}
+          />
+          <Select
+            label="Class"
+            placeholder="class"
+            onChange={(e => setField({ ...field, class: e }))}
+            data={Array(7).fill().map((_, index) => ({ value: index + 1, label: index + 1 }))}
+          />
+          <Select
+            label="Division"
+            placeholder="Division"
+            onChange={(e => setField({ ...field, division: e }))}
+            data={[
+              { value: "A", label: "A" },
+              { value: "B", label: "B" },
+              { value: "C", label: "C" },
+              { value: "D", label: "D" },
+              { value: "E", label: "E" },
+              { value: "F", label: "F" },
+              { value: "G", label: "G" },
+              { value: "H", label: "H" }
+            ]}
+          />
+
         </div>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0 50px 0 50px",
-              gap: "12px",
-            }}
-          >
 
-            <MobileDatePicker
-              label="Date of Birth"
-              inputFormat="MM/DD/YYYY"
-              value={date}
-              onChange={onDate}
-              onAccept={(e) => onChange(null, { name: "DoB", value: e.$d })}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </div>
-        </LocalizationProvider>
 
-        <TextField
-          id="outlined-basic"
-          label="Email"
+        <DatePicker onChange={(e) => setField({ ...field, DoB: e?.toLocaleDateString() ? e?.toLocaleDateString() : "" })} placeholder="Date of Birth" label="DoB" />
+
+        <TextInput
+
           name="email"
-          variant="outlined"
+          placeholder="Email"
+          label="Email"
+
           onChange={onChange}
         />
 
-        <TextField
-          id="outlined-basic"
+
+
+
+
+        <TextInput
+
           label="Job"
           name="job"
-          variant="outlined"
+          placeholder="Name"
+
           onChange={onChange}
         />
-        <TextField
-          id="outlined-basic"
+
+
+        <TextInput
+
           label="Address"
           name="address"
-          variant="outlined"
+          placeholder="Your address"
+
           onChange={onChange}
         />
+
+
         <FormControl>
           <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
           <RadioGroup

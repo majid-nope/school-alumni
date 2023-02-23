@@ -11,4 +11,5 @@ export const auth = {
     }),
 
   login: (data) => axios.post("/login", data),
+  logout: () => axios.post("/logout"),
 };

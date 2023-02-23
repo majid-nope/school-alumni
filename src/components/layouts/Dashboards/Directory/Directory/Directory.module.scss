@@ -68,6 +68,7 @@
                 border-radius: 50%;
             }
 
+
             .info {
                 position: relative;
                 display: flex;
@@ -76,17 +77,42 @@
                 align-items: center;
                 color: rgb(73, 73, 73);
 
-                span {
+                .email {
                     width: 150px;
                     text-align: end;
                     word-wrap: break-word;
                     font-size: small;
                     color: rgb(146, 146, 146);
+                    top: 35%;
                     position: absolute;
-                    bottom: -10px;
-                    right: 47px;
+                    // bottom: -10px;
+                    // right: 47px;
 
                 }
+
+                .batch {
+                    padding: 10px;
+
+                    display: flex;
+                    // align-items: flex-start;
+                    gap: 5px;
+                    flex-direction: column;
+                    width: 100px;
+
+                    background-color: #e7eaf1;
+                    backdrop-filter: blur(20px);
+                    border-radius: 12px;
+                    box-shadow: 0 0 0 0 gray;
+                    font-size: small;
+                    color: #842626;
+
+                    span {
+                        white-space: nowrap;
+
+
+                    }
+                }
+
 
             }
         }
@@ -98,27 +124,7 @@
             align-items: center;
             justify-content: center;
 
-            .batch {
-                padding: 10px;
 
-                display: flex;
-                align-items: flex-start;
-                gap: 5px;
-                flex-direction: column;
-                width: 100px;
-
-                background-color: #e7eaf1;
-                backdrop-filter: blur(20px);
-                border-radius: 12px;
-                box-shadow: 0 0 0 0 gray;
-                font-size: small;
-                color: #842626;
-
-                span {
-                    white-space: nowrap;
-
-                }
-            }
 
             .moreInfo {
                 width: 100%;
@@ -127,8 +133,7 @@
                 flex-direction: column;
                 gap: 5px;
                 font-size: 15px;
-                overflow-x: scroll;
-                overflow-y: hidden;
+
                 padding-top: 6px;
 
                 &::-webkit-scrollbar {
