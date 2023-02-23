@@ -12,10 +12,10 @@ const NavBar = () => {
     <div className={style.navbar}>
       <div className={style.brand}>
         <img src={img} alt="logo" />
-        <span>GMUP School, Chirayil Chunkam
+        <span>GMUP School Chirayil
         </span>
       </div>
-      {onMedia && <Button onClick={() => dispatch(logout())}>Logout</Button>}
+      {onMedia && <Button  onClick={() => dispatch(logout())}>Logout</Button>}
 
     </div>
   );
